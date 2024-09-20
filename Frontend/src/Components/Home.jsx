@@ -1,199 +1,119 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import './Home.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { getLoggedIn } from '../services/authService';
+import NotLoggedIn from './helper/NotLoggedIn';
+import './CollegeDetails.css'; // Import the CSS file
 
-const Home = () => {
+function CollegeDetails() {
+  const loggedIn = getLoggedIn();
+
+  // Updated static data for the college
+  const college = {
+    name: 'R.M.K. Engineering College',
+    address: '123 College Road, Chennai, India',
+    dateOfEstablishment: '1995',
+    principalName: 'Mr. Junaid Mohammed',
+    enrollment: {
+      2021: 2000,
+      2022: 2200,
+      2023: 2500,
+    },
+    faculty: {
+      totalStaff: 80,
+      principal: 1,
+      vicePrincipal: 1,
+      lecturers: 60,
+      seniorLecturers: 18,
+    },
+    library: {
+      totalStaff: 5,
+      librarian: 1,
+      assistantLibrarian: 2,
+    },
+    academicPerformance: {
+      highSchoolPassPercentage: '96%',
+      degreePassPercentage: '92%',
+    },
+    selfAssessmentReports: 'Available upon request.',
+    studentSatisfaction: '90% of students are satisfied with the college.',
+    collegeReputation: 'One of the top engineering colleges in the region.',
+    raggingIncidents: 'No ragging incidents reported.',
+    fundsRecovered: {
+      lastTwoYears: '₹10,00,000',
+    },
+    fundsSpent: {
+      sports: '₹4,00,000',
+      library: '₹2,00,000',
+      youthFestivals: '₹1,00,000',
+      coCurricular: '₹2,50,000',
+    },
+  };
+
   return (
-    <div className="home-container">
-      {/* Hero Section */}
-      <section id="hero" className="d-flex align-items-center justify-content-center hero-section bg-dark text-light">
-        <div className="container text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: -50 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 1 }}>
-            Welcome to EduInspect AI
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 1, delay: 0.5 }}>
-            Revolutionizing Institutional Inspections with Cutting-Edge Technology
-          </motion.p>
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 1, delay: 1 }}>
-            <a href="#features" className="btn btn-warning btn-lg me-3">Discover Features</a>
-            <a href="#about" className="btn btn-outline-light btn-lg">Learn More</a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* AI-Powered Analysis Section */}
-      <section id="ai-analysis" className="py-5 bg-light text-dark">
-        <div className="container">
-          <h2 className="text-center mb-5">AI-Powered Analysis</h2>
-          <div className="row">
-            <div className="col-md-6">
-              <motion.img
-                src="images/ai-analysis.jpg" 
-                alt="AI Analysis"
-                className="img-fluid mb-3"
-                initial={{ opacity: 0, x: -100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}
-              />
-            </div>
-            <div className="col-md-6">
-              <motion.p
-                initial={{ opacity: 0, x: 100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}>
-                Our AI technology leverages advanced image recognition and machine learning to analyze institutional environments, identifying potential issues like missing equipment or infrastructure problems. With AI-powered insights, we streamline the inspection process for greater accuracy and efficiency.
-              </motion.p>
-            </div>
+    <div className="college-details-container">
+      {loggedIn ? (
+        <div className="college-details-content">
+          <h2 className="college-name">{college.name}</h2>
+          <div className="college-info">
+            <p><strong>Address:</strong> {college.address}</p>
+            <p><strong>Date of Establishment:</strong> {college.dateOfEstablishment}</p>
+            <p><strong>Principal:</strong> {college.principalName}</p>
           </div>
-        </div>
-      </section>
 
-      {/* Blockchain Verification Section */}
-      <section id="blockchain" className="py-5 bg-dark text-light">
-        <div className="container">
-          <h2 className="text-center mb-5">Blockchain Verification</h2>
-          <div className="row">
-            <div className="col-md-6">
-              <motion.p
-                initial={{ opacity: 0, x: -100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}>
-                EduInspect AI ensures the authenticity of all data using blockchain technology. Every image and compliance report is securely geotagged and timestamped, and all data is stored on a blockchain ledger, making it tamper-proof and auditable.
-              </motion.p>
-            </div>
-            <div className="col-md-6">
-              <motion.img
-                src="images/blockchain-security.jpg" 
-                alt="Blockchain Verification"
-                className="img-fluid mb-3"
-                initial={{ opacity: 0, x: 100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+          <h3 className="section-title">Enrollment</h3>
+          <ul className="info-list">
+            {Object.entries(college.enrollment).map(([year, count]) => (
+              <li key={year}>{year}: <span className="highlight">{count}</span> students</li>
+            ))}
+          </ul>
 
-      {/* Natural Language Processing Section */}
-      <section id="nlp" className="py-5 bg-light text-dark">
-        <div className="container">
-          <h2 className="text-center mb-5">Natural Language Processing (NLP)</h2>
-          <div className="row">
-            <div className="col-md-6">
-              <motion.img
-                src="images/nlp-processing.jpg" 
-                alt="NLP"
-                className="img-fluid mb-3"
-                initial={{ opacity: 0, x: -100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}
-              />
-            </div>
-            <div className="col-md-6">
-              <motion.p
-                initial={{ opacity: 0, x: 100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}>
-                With advanced NLP algorithms, EduInspect AI processes compliance documents, faculty credentials, and student reports in seconds. This allows for faster and more accurate inspections, ensuring institutions remain compliant with regulatory standards.
-              </motion.p>
-            </div>
+          <h3 className="section-title">Faculty Details</h3>
+          <div className="info-details">
+            <p><strong>Total Teaching Staff:</strong> {college.faculty.totalStaff}</p>
+            <p><strong>Principal:</strong> {college.faculty.principal}</p>
+            <p><strong>Vice Principal:</strong> {college.faculty.vicePrincipal}</p>
+            <p><strong>Lecturers:</strong> {college.faculty.lecturers}</p>
+            <p><strong>Senior Lecturers:</strong> {college.faculty.seniorLecturers}</p>
           </div>
-        </div>
-      </section>
 
-      {/* Machine Learning Insights Section */}
-      <section id="machine-learning" className="py-5 bg-dark text-light">
-        <div className="container">
-          <h2 className="text-center mb-5">Machine Learning Insights</h2>
-          <div className="row">
-            <div className="col-md-6">
-              <motion.p
-                initial={{ opacity: 0, x: -100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}>
-                EduInspect AI learns from past inspections using machine learning algorithms, providing predictive insights that help institutions identify future risks. This proactive approach reduces non-compliance and promotes continuous improvement.
-              </motion.p>
-            </div>
-            <div className="col-md-6">
-              <motion.img
-                src="images/ml-insights.jpg" 
-                alt="Machine Learning"
-                className="img-fluid mb-3"
-                initial={{ opacity: 0, x: 100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}
-              />
-            </div>
+          <h3 className="section-title">Library Details</h3>
+          <div className="info-details">
+            <p><strong>Total Library Staff:</strong> {college.library.totalStaff}</p>
+            <p><strong>Librarian:</strong> {college.library.librarian}</p>
+            <p><strong>Assistant Librarians:</strong> {college.library.assistantLibrarian}</p>
           </div>
-        </div>
-      </section>
 
-      {/* Real-Time Feedback Section */}
-      <section id="feedback" className="py-5 bg-light text-dark">
-        <div className="container">
-          <h2 className="text-center mb-5">Real-Time Feedback</h2>
-          <div className="row">
-            <div className="col-md-6">
-              <motion.img
-                src="images/feedback-loop.jpg" 
-                alt="Feedback"
-                className="img-fluid mb-3"
-                initial={{ opacity: 0, x: -100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}
-              />
-            </div>
-            <div className="col-md-6">
-              <motion.p
-                initial={{ opacity: 0, x: 100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}>
-                EduInspect AI incorporates real-time feedback from students and faculty into the inspection process. This ensures data accuracy and promotes transparency, allowing institutions to quickly address issues and improve the educational experience.
-              </motion.p>
-            </div>
+          <h3 className="section-title">Academic Performance</h3>
+          <div className="info-details">
+            <p><strong>High School Pass Percentage:</strong> {college.academicPerformance.highSchoolPassPercentage}</p>
+            <p><strong>Degree Pass Percentage:</strong> {college.academicPerformance.degreePassPercentage}</p>
           </div>
-        </div>
-      </section>
 
-      {/* Cloud Infrastructure Section */}
-      <section id="cloud" className="py-5 bg-dark text-light">
-        <div className="container">
-          <h2 className="text-center mb-5">Cloud Infrastructure</h2>
-          <div className="row">
-            <div className="col-md-6">
-              <motion.p
-                initial={{ opacity: 0, x: -100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}>
-                Our system is built on scalable cloud infrastructure, ensuring that your institution’s data is secure, accessible, and scalable. Whether you’re processing a single report or thousands, EduInspect AI delivers consistent, high-quality results.
-              </motion.p>
-            </div>
-            <div className="col-md-6">
-              <motion.img
-                src="images/cloud-infrastructure.jpg" 
-                alt="Cloud Infrastructure"
-                className="img-fluid mb-3"
-                initial={{ opacity: 0, x: 100 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1 }}
-              />
-            </div>
-          </div>
+          <h3 className="section-title">Self-Assessment Reports</h3>
+          <p>{college.selfAssessmentReports}</p>
+
+          <h3 className="section-title">Student Satisfaction</h3>
+          <p>{college.studentSatisfaction}</p>
+
+          <h3 className="section-title">College Reputation</h3>
+          <p>{college.collegeReputation}</p>
+
+          <h3 className="section-title">Ragging Incidents</h3>
+          <p>{college.raggingIncidents}</p>
+
+          <h3 className="section-title">Funds Recovered from Students</h3>
+          <p><strong>Last Two Years:</strong> {college.fundsRecovered.lastTwoYears}</p>
+
+          <h3 className="section-title">Funds Spent on Activities</h3>
+          <p><strong>Sports:</strong> {college.fundsSpent.sports}</p>
+          <p><strong>Library:</strong> {college.fundsSpent.library}</p>
+          <p><strong>Youth Festivals:</strong> {college.fundsSpent.youthFestivals}</p>
+          <p><strong>Co-Curricular Activities:</strong> {college.fundsSpent.coCurricular}</p>
         </div>
-      </section>
+      ) : (
+        <NotLoggedIn />
+      )}
     </div>
   );
-};
+}
 
-export default Home;
+export default CollegeDetails;

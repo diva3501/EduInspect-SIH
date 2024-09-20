@@ -1,85 +1,81 @@
 import React, { useState } from 'react';
 import { getLoggedIn } from "../services/authService";
 import { Link } from "react-router-dom";
+import './VideoConference.css';
 
 const VideoConference = () => {
   const loggedIn = getLoggedIn();
-  const [meetingLink, setMeetingLink] = useState('');
-  const [showNotifyButton, setShowNotifyButton] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [showNotificationPopup, setShowNotificationPopup] = useState(false);
 
-  // List of available links
-  const links = [
-    'https://meet.google.com/hbg-zxay-vtv',
-    'https://meet.google.com/stj-yort-cys',
-    'https://meet.google.com/rws-rywg-aua',
-    'https://meet.google.com/zhp-uauh-hir'
-  ];
-
-  const handleGenerateMeetingLink = () => {
-    // Randomly select a link from the list
-    const randomIndex = Math.floor(Math.random() * links.length);
-    const newMeetingLink = links[randomIndex];
-    setMeetingLink(newMeetingLink);
-    setShowNotifyButton(true); // Show the "Notify Students" button after generating the link
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files);
+    const imageUrls = files.map(file => URL.createObjectURL(file));
+    setSelectedImages(prevImages => [...prevImages, ...imageUrls]);
   };
 
-  const handleNotifyStudents = () => {
-    // Logic to notify students (e.g., send notifications)
-    console.log('Notification sent for meeting:', meetingLink);
-
-    // Show notification popup
+  const handleSubmitImages = () => {
+    console.log('Images submitted:', selectedImages);
     setShowNotificationPopup(true);
-
-    // Hide notification popup after 3 seconds
-    setTimeout(() => setShowNotificationPopup(false), 3000);
+    
+    // Reload the page after 5 seconds
+    setTimeout(() => {
+      setSelectedImages([]); // Clear images
+      setShowNotificationPopup(false);
+      window.location.reload(); // Reload the page
+    }, 5000);
   };
 
   return (
-    <div className="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-200 mt-5 mb-5">
+    <div className="container mt-5">
       {loggedIn ? (
         <div>
-          <h2 className="text-2xl h4 text-gray-900 mb-6">Video Conference with Alumni</h2>
+          {/* Instructions Card */}
+          <div className="card mb-4 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Instructions for Uploading Images</h5>
+              <p className="card-text">
+                Please upload relevant images for the conference. You can select multiple images at once.
+                After selecting, you'll be able to preview the images before submission. Ensure that the images are clear and represent your work effectively.
+              </p>
+            </div>
+          </div>
 
-          <div className="mb-6">
-            <label htmlFor="meetingLink" className="block text-sm font-medium text-gray-700">
-              Meeting Link
-            </label>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Upload Images for the Conference</h2>
+
+          <div className="mb-4">
             <input
-              id="meetingLink"
-              type="text"
-              className="mt-2 p-3 border border-gray-300 rounded-lg w-full bg-gray-50 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500"
-              value={meetingLink}
-              readOnly
-              placeholder="Generated meeting link will appear here..."
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageChange}
+              className="form-control mb-4"
             />
+          </div>
+
+          <div className="row mb-4">
+            {selectedImages.map((image, index) => (
+              <div className="col-md-4 mb-4" key={index}>
+                <img src={image} alt={`Uploaded Preview ${index + 1}`} className="img-fluid rounded shadow" />
+              </div>
+            ))}
           </div>
 
           <div className="mb-6">
             <button
-              className="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg text-lg font-semibold shadow-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 transition duration-200"
-              onClick={handleGenerateMeetingLink}
+              className="btn btn-primary w-100"
+              onClick={handleSubmitImages}
+              disabled={selectedImages.length === 0}
             >
-              Generate Meeting Link
+              Submit Images
             </button>
           </div>
 
-          {showNotifyButton && (
-            <div className="mb-6">
-              <button
-                className="w-full bg-green-600 text-white px-4 py-2 rounded-lg text-lg font-semibold shadow-md hover:bg-green-700 focus:ring-2 focus:ring-green-500 transition duration-200"
-                onClick={handleNotifyStudents}
-              >
-                Notify Students
-              </button>
-            </div>
-          )}
-
           {showNotificationPopup && (
-            <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
               <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                <h3 className="text-lg font-semibold mb-2 text-green-600">Notification Sent!</h3>
-                <p className="text-gray-700">Students have been notified about the meeting.</p>
+                <h3 className="text-lg font-semibold mb-2 text-green-600">Submitted Successfully!</h3>
+                <p className="text-gray-700">Your images have been submitted for the conference.</p>
               </div>
             </div>
           )}
@@ -87,15 +83,8 @@ const VideoConference = () => {
       ) : (
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-6">You're Not Logged In</h1>
-          <p className="text-gray-600 mb-6">
-            Please log in to access our meeting tab.
-          </p>
-          <Link
-            to="/login"
-            className="bg-black text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-gray-800 transition duration-200"
-          >
-            Login
-          </Link>
+          <p className="text-gray-600 mb-6">Please log in to access the image upload feature.</p>
+          <Link to="/login" className="btn btn-dark">Login</Link>
         </div>
       )}
     </div>
