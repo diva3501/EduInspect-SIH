@@ -23,24 +23,36 @@ const getRandomAnalysis = () => {
 const AnalysisInfoCard = () => {
   return (
     <Card className="mb-4 p-3 shadow">
-      <Card.Title className="text-center">NLP Analysis Overview</Card.Title>
+      <Card.Title className="text-center">
+        <span className="emoji" role="img" aria-label="Analysis Overview">📊</span>
+        NLP Analysis Overview
+      </Card.Title>
       <Card.Body>
         <p>
           The NLP analysis assesses faculty data based on various parameters to ensure compliance with AICTE standards.
         </p>
-        <h5>Requirements for Positive Analysis:</h5>
+        <h5>
+          <span className="emoji" role="img" aria-label="Positive">✅</span>
+          Requirements for Positive Analysis:
+        </h5>
         <ul>
           <li>Structured data in the provided PDF format.</li>
           <li>All faculty members must have relevant qualifications listed.</li>
           <li>Comprehensive records of training and professional development.</li>
         </ul>
-        <h5>Negative Findings:</h5>
+        <h5>
+          <span className="emoji" role="img" aria-label="Negative">❌</span>
+          Negative Findings:
+        </h5>
         <ul>
           <li>Missing expected qualifications such as PhD or Master's degree.</li>
           <li>Inconsistent data formatting.</li>
           <li>Lack of detailed training records.</li>
         </ul>
-        <h5>Recommendations:</h5>
+        <h5>
+          <span className="emoji" role="img" aria-label="Recommendations">💡</span>
+          Recommendations:
+        </h5>
         <ul>
           <li>Standardize the data format for easier processing.</li>
           <li>Ensure all faculty qualifications are accurately listed.</li>

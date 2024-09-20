@@ -54,11 +54,11 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/events",
+        path: "/ml-analysis",
         element: <Event />,
       },
       {
-        path: "/jobs",
+        path: "/collegedetails",
         element: <Jobs />,
       },
       {
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         element: <Newsletter />,
       },
       {
-        path: "/donation",
+        path: "/faculty-detail-analysis",
         element: <SendMail />,
       },
       {
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
         element: <SearchPeople />,
       },
       {
-        path: "/meeting",
+        path: "/infrastructure-inspection",
         element: <Meeting />,
       },
       {

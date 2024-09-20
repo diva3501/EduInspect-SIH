@@ -36,4 +36,58 @@ body {
   .shadow-lg {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+  /* General Card Styles */
+.card {
+    border-radius: 15px;
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .card-body {
+    background-color: #f8f9fa;
+  }
+  
+  /* Heading Styles */
+  h5 {
+    color: #007bff;
+    margin-top: 20px;
+  }
+  
+  /* List Styles */
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  /* Emoji Styles */
+  .emoji {
+    font-size: 1.2rem;
+    margin-right: 5px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 576px) {
+    .card-title {
+      font-size: 1.2rem;
+    }
+  
+    li {
+      font-size: 1rem;
+    }
+  }
   
