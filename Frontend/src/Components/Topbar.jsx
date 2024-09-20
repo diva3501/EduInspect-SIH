@@ -33,7 +33,7 @@ export default function Topbar() {
 				<a
 					href='/'
 					className='text-xl font-extrabold'>
-					NexusDEV
+					EduInspect AI
 				</a>
 			</div>
 

@@ -8,8 +8,10 @@ function Footer() {
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6">
         {/* Branding Section */}
         <div className="footer-brand mb-4 md:mb-0 text-center md:text-left">
-          <h2 className="text-2xl font-bold">NexusDEV</h2>
-          <p className="text-sm mt-1">Connecting alumni worldwide</p>
+          <h2 className="text-2xl font-bold">EduInspect AI</h2>
+          <p className="text-sm mt-1">Revolutionizing Institutional Inspections with Cutting-Edge Technology
+
+</p>
         </div>
 
         {/* Social Media Icons */}
@@ -34,7 +36,7 @@ function Footer() {
 
       {/* Copyright Section */}
       <div className="text-center text-sm">
-        <p>&copy; 2024 NexusDEV. All rights reserved.</p>
+        <p>&copy; 2024 EduInspect AI. All rights reserved.</p>
       </div>
     </footer>
   );

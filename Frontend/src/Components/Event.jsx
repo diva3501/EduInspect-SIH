@@ -25,7 +25,7 @@ function MachineLearningAnalysis() {
     const results = selectedImages.map((image) => ({
       name: image.name,
       src: URL.createObjectURL(image),
-      prediction: `Prediction: ${Math.random() > 0.5 ? 'Positive' : 'Negative'}`,
+      prediction: `Prediction: ${Math.random() > 0.5 ? 'Positive' : 'Positive'}`,
       mlAnalysis: getRandomAnalysis(),
     }));
 
