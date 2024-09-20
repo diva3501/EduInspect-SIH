@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.feed-back{
+    font-weight: bold;
+    font-size: 18px;
+}
+.contain{
+    margin-top: 80px;
+}
+.question{
+    font-weight: bold;
+}

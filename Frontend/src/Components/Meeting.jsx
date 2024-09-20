@@ -26,12 +26,12 @@ const VideoConference = () => {
   };
 
   return (
-    <div className="container mt-5 mb-5">
+    <div className="container ">
       {loggedIn ? (
-        <div className="card p-4">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Upload Conference Images</h2>
+        <div className="card p-4  ">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4 upcomeing">Upload Conference Images</h2>
 
-          <div className="mb-4">
+          <div className="mb-5 ">
             <div className="instruction-card p-4 bg-blue-100 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold mb-2">Instructions</h3>
               <ul className="list-disc list-inside text-gray-700">
@@ -63,7 +63,7 @@ const VideoConference = () => {
           </div>
 
           <button
-            className="btn btn-primary w-full"
+            className="btn btn-primary w-full mb-4"
             onClick={handleSubmit}
           >
             Submit Images

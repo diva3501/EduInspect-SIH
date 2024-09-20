@@ -36,12 +36,12 @@ const Feedback = () => {
   const agreeDisagreeOptions = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
 
   return (
-    <div className="container-sm mx-40 p-6">
-      <h2 className="text-2xl font-bold mb-4">Provide your Valuable Feedback & Suggestions</h2>
+    <div className="container-sm mx-40 p-6 ">
+      <h2 className="text-2xl font-bold mb-4 contain">Provide your Valuable Feedback & Suggestions</h2>
 
       {/* Experience Rating */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-600">How would you rate your overall experience with Alumni Connect?</label>
+        <label className="block text-sm font-medium text-gray-600 feed-back">How would you rate your overall experience with Alumni Connect?</label>
         <input
           type="range"
           min="1"
@@ -55,7 +55,7 @@ const Feedback = () => {
 
       {/* Agree/Disagree Options */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-600">To what extent do you agree with the statements below?</label>
+        <label className="block text-sm font-medium text-gray-600 question">To what extent do you agree with the statements below?</label>
         {agreeDisagreeOptions.map((option) => (
           <div key={option} className="flex items-center">
             <input
@@ -74,7 +74,7 @@ const Feedback = () => {
 
       {/* Strongly Agree Options */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-600">For the following statements, please indicate how strongly you agree:</label>
+        <label className="block text-sm font-medium text-gray-600 question">For the following statements, please indicate how strongly you agree:</label>
         {agreeDisagreeOptions.map((option) => (
           <div key={option} className="flex items-center">
             <input
@@ -93,7 +93,7 @@ const Feedback = () => {
 
       {/* Additional Feedback Comments */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-600">Do you have any additional comments or suggestions for improvement? (Optional)</label>
+        <label className="block text-sm font-medium text-gray-600 question">Do you have any additional comments or suggestions for improvement? (Optional)</label>
         <textarea
           rows="4"
           value={feedbackComments}
@@ -105,7 +105,7 @@ const Feedback = () => {
 
       {/* Meaningful Dropdown */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-600">Please select the option that best describes your primary reason for using Alumni Connect:</label>
+        <label className="block text-sm font-medium text-gray-600 question">Please select the option that best describes your primary reason for using Alumni Connect:</label>
         <select
           value={selectedOption}
           onChange={(e) => setSelectedOption(e.target.value)}

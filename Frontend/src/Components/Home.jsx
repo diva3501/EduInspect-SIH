@@ -7,40 +7,63 @@ const Home = () => {
   return (
     <div className="home-container">
       {/* Hero Section */}
-      <section id="hero" className="d-flex align-items-center justify-content-center hero-section bg-dark text-light">
-        <div className="container text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: -50 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 1 }}>
+      <section id="hero" className="d-flex align-items-center justify-content-center hero-section">
+        <div className="wrapper">
+          <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div className="container text-center content-overlay ">
+          <motion.h1
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className='hero'
+          >
             Welcome to EduInspect AI
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 1, delay: 0.5 }}>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className='title'
+          >
             Revolutionizing Institutional Inspections with Cutting-Edge Technology
           </motion.p>
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 1, delay: 1 }}>
-            <a href="#features" className="btn btn-warning btn-lg me-3">Discover Features</a>
-            <a href="#about" className="btn btn-outline-light btn-lg">Learn More</a>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+          >
+            <a href="#features" className="btn btn-lg me-3 title">
+              Discover Features
+            </a>
+            <a href="#about" className="btn learn btn-lg title">
+              Learn More
+            </a>
           </motion.div>
         </div>
       </section>
 
-      {/* AI-Powered Analysis Section */}
-      <section id="ai-analysis" className="py-5 bg-light text-dark">
+     {/* AI-Powered Analysis Section */}
+     <section id="ai-analysis" className="py-5 bg-light text-dark">
         <div className="container">
           <h2 className="text-center mb-5">AI-Powered Analysis</h2>
           <div className="row">
             <div className="col-md-6">
               <motion.img
-                src="images/ai-analysis.jpg" 
+                src="https://cdn.pixabay.com/photo/2024/04/05/05/16/businesswoman-8676522_1280.jpg" 
                 alt="AI Analysis"
-                className="img-fluid mb-3"
+                className="img-fluid image mb-3 shadow-lg shadow-lgs "
                 initial={{ opacity: 0, x: -100 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ duration: 1 }}
@@ -73,9 +96,9 @@ const Home = () => {
             </div>
             <div className="col-md-6">
               <motion.img
-                src="images/blockchain-security.jpg" 
+                src="https://www.cyberbahnit.com/wp-content/uploads/2017/11/blockchain.jpg" 
                 alt="Blockchain Verification"
-                className="img-fluid mb-3"
+                className="img-fluid mb-3 bl-img shadow-lg shadow-lgs"
                 initial={{ opacity: 0, x: 100 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ duration: 1 }}
@@ -92,9 +115,9 @@ const Home = () => {
           <div className="row">
             <div className="col-md-6">
               <motion.img
-                src="images/nlp-processing.jpg" 
+                src="https://images.prismic.io/turing/652ebe6bfbd9a45bcec81881_Natural_Language_Processing_Functionality_in_AI_95cadec9bc.webp?auto=format,compress" 
                 alt="NLP"
-                className="img-fluid mb-3"
+                className="img-fluid mb-3 np-img shadow-lg shadow-lgs"
                 initial={{ opacity: 0, x: -100 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ duration: 1 }}
@@ -127,9 +150,9 @@ const Home = () => {
             </div>
             <div className="col-md-6">
               <motion.img
-                src="images/ml-insights.jpg" 
+                src="https://cdn.pixabay.com/photo/2024/01/29/22/47/ai-generated-8540915_1280.jpg" 
                 alt="Machine Learning"
-                className="img-fluid mb-3"
+                className="img-fluid mb-3 shadow-lg shadow-lgs"
                 initial={{ opacity: 0, x: 100 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ duration: 1 }}
@@ -146,9 +169,9 @@ const Home = () => {
           <div className="row">
             <div className="col-md-6">
               <motion.img
-                src="images/feedback-loop.jpg" 
+                src="https://cdn.pixabay.com/photo/2020/04/04/03/42/chat-5000695_1280.png" 
                 alt="Feedback"
-                className="img-fluid mb-3"
+                className="img-fluid mb-3 shadow-lg shadow-lgs"
                 initial={{ opacity: 0, x: -100 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ duration: 1 }}
@@ -181,9 +204,9 @@ const Home = () => {
             </div>
             <div className="col-md-6">
               <motion.img
-                src="images/cloud-infrastructure.jpg" 
+                src="https://media.istockphoto.com/id/1339235818/vector/data-center-isometric-concept-server-room-with-hardware-racks-or-web-hosting-infrastructure.webp?s=1024x1024&w=is&k=20&c=aW5xz5-BlFuopiVlYumaYVIJpaVIh27o9Wbv551AquQ=" 
                 alt="Cloud Infrastructure"
-                className="img-fluid mb-3"
+                className="img-fluid mb-3 shadow-lg shadow-lgs"
                 initial={{ opacity: 0, x: 100 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ duration: 1 }}
@@ -191,7 +214,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section>  
     </div>
   );
 };
