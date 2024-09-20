@@ -1,89 +1,48 @@
 body {
-    background-color: #f8f9fa; /* Light background */
+    background-color: #f8f9fa;
     font-family: 'Arial', sans-serif;
 }
 
 .container {
     max-width: 800px;
     margin: auto;
-    padding: 20px;
 }
 
 .card {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    transition: transform 0.3s;
 }
 
-.instruction-list {
-    background-color: #e9ecef; /* Light grey background for instructions */
-    border-left: 4px solid #007bff; /* Blue left border */
-    padding: 10px 15px; /* Padding for the instruction box */
-    border-radius: 5px; /* Rounded corners */
+.card:hover {
+    transform: scale(1.02);
 }
 
-.btn-primary {
+.instruction-card {
+    border-left: 5px solid #007bff;
+}
+
+.btn {
     background-color: #007bff;
     color: white;
     border-radius: 5px;
     font-weight: bold;
-    padding: 10px 15px;
-    width: 100%;
-    border: none;
-    cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
 }
 
-.btn-primary:hover {
+.btn:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
 }
 
-.btn-success {
-    background-color: #28a745; /* Green button for submission */
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-    padding: 10px 15px;
-    width: 100%;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-}
-
-.form-control {
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #007bff;
-    background-color: #e9ecef;
-    transition: border-color 0.3s;
-    width: 100%; /* Full width */
-}
-
-.form-control:focus {
-    border-color: #0056b3;
-}
-
-.image-preview {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* Space between images */
-}
-
 .img-fluid {
     border-radius: 5px;
-    max-width: 100px; /* Limit image size */
     transition: transform 0.3s;
 }
 
 .img-fluid:hover {
-    transform: scale(1.05); /* Slightly enlarge image on hover */
+    transform: scale(1.05);
 }
 
 .fixed {

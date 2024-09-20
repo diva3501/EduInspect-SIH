@@ -1,255 +1,123 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
-import { FaCalendarAlt, FaMapMarkerAlt, FaRegNewspaper, FaLink } from 'react-icons/fa';
-import './Event.css'; // Import custom CSS for additional styling
+import React, { useState } from 'react';
+import { Container, Row, Col, Form, Button, Card, Alert, Spinner } from 'react-bootstrap';
+import './MachineLearningAnalysis.css'; // Import custom CSS for additional styling
 
-function Event() {
-  const [formData, setFormData] = useState({
-    title: '',
-    date: '',
-    location: '',
-    description: '',
-    gmeetLink: '',
-    eventType: 'Technical',
-  });
-  const [showTechnicalEvents, setShowTechnicalEvents] = useState(false);
-  const [showNonTechnicalEvents, setShowNonTechnicalEvents] = useState(false);
-  const [technicalEvents, setTechnicalEvents] = useState([
-    {
-      _id: '1',
-      title: 'Introduction to React',
-      date: '2024-09-20',
-      location: 'Online',
-      description: 'A beginner’s guide to React, including its concepts and how to build components.',
-      gmeetLink: 'https://meet.google.com/gyv-imop-zgn',
-    },
-    // More technical events
-  ]);
-  const [nonTechnicalEvents, setNonTechnicalEvents] = useState([]);
+function MachineLearningAnalysis() {
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [mlResults, setMlResults] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [feedbacks, setFeedbacks] = useState({});
 
-  useEffect(() => {
-    if (showSuccess) {
-      const timer = setTimeout(() => setShowSuccess(false), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [showSuccess]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setSelectedImages(files);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.eventType === 'Technical') {
-      setTechnicalEvents([...technicalEvents, { ...formData, _id: Date.now().toString() }]);
-    } else {
-      setNonTechnicalEvents([...nonTechnicalEvents, { ...formData, _id: Date.now().toString() }]);
-    }
-    setFormData({
-      title: '',
-      date: '',
-      location: '',
-      description: '',
-      gmeetLink: '',
-      eventType: 'Technical',
-    });
+    setLoading(true);
+    setShowSuccess(false);
+    setMlResults([]);
+
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+
+    const results = selectedImages.map((image) => ({
+      name: image.name,
+      src: URL.createObjectURL(image),
+      prediction: `Prediction: ${Math.random() > 0.5 ? 'Positive' : 'Negative'}`,
+      mlAnalysis: getRandomAnalysis(),
+    }));
+
+    setMlResults(results);
     setShowSuccess(true);
+    setLoading(false);
+    setSelectedImages([]);
+  };
+
+  const getRandomAnalysis = () => {
+    const analyses = [
+      "The image demonstrates strong engagement from students during the lecture.",
+      "The photo showcases a well-organized event with significant participation.",
+      "This image highlights effective collaboration among students on a project.",
+      "The image indicates a successful outreach event with community involvement.",
+      "The analysis shows the effective use of technology in a classroom setting."
+    ];
+    return analyses[Math.floor(Math.random() * analyses.length)];
+  };
+
+  const handleFeedbackChange = (index, value) => {
+    setFeedbacks({ ...feedbacks, [index]: value });
   };
 
   return (
     <Container className="py-5">
-      <h1 className="text-center mb-4">Create an Event</h1>
+      <h1 className="text-center mb-4">Machine Learning Analysis</h1>
 
       <Form onSubmit={handleSubmit} className="mb-5 p-4 bg-light shadow-lg rounded">
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="formTitle">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                placeholder="Enter event title"
-                required
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="formDate">
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Form.Group controlId="formLocation">
-          <Form.Label>Location</Form.Label>
+        <Form.Group controlId="formImages">
+          <Form.Label>Select Images for Analysis</Form.Label>
           <Form.Control
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            placeholder="Enter event location"
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleImageChange}
             required
           />
-        </Form.Group>
-        <Form.Group controlId="formDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Enter event description"
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="formGmeetLink">
-          <Form.Label>Google Meet Link</Form.Label>
-          <Form.Control
-            type="text"
-            name="gmeetLink"
-            value={formData.gmeetLink}
-            onChange={handleChange}
-            placeholder="Enter Google Meet link (optional)"
-          />
-        </Form.Group>
-        <Form.Group controlId="formEventType">
-          <Form.Label>Event Type</Form.Label>
-          <Form.Control
-            as="select"
-            name="eventType"
-            value={formData.eventType}
-            onChange={handleChange}
-            required
-          >
-            <option value="Technical">Technical</option>
-            <option value="Non-Technical">Non-Technical</option>
-          </Form.Control>
         </Form.Group>
         <Button type="submit" variant="primary" className="mt-3 w-100">
-          Submit
+          Analyze Images
         </Button>
       </Form>
 
-      {showSuccess && (
-        <Alert variant="success" className="text-center success-popup">
-          Event created successfully!
+      {loading && (
+        <Alert variant="info" className="text-center">
+          <Spinner animation="border" role="status" />
+          <span className="ms-2">Please wait, ML analysis is on the way...</span>
         </Alert>
       )}
 
-      <div className="d-flex justify-content-between mb-4">
-      <Button
-  onClick={() => setShowTechnicalEvents(!showTechnicalEvents)}
-  className="btn-toggle btn-show"
->
-  {showTechnicalEvents ? 'Hide Technical Events' : 'Show Technical Events'}
-</Button>
-
-<Button
-  onClick={() => setShowNonTechnicalEvents(!showNonTechnicalEvents)}
-  className="btn-toggle btn-hide"
->
-  {showNonTechnicalEvents ? 'Hide Non-Technical Events' : 'Show Non-Technical Events'}
-</Button>
-
-      </div>
-
-      {showTechnicalEvents && (
-        <>
-          <h2 className="text-center mb-4">Technical Events</h2>
-          <Row>
-            {technicalEvents.map((event) => (
-              <Col md={4} key={event._id} className="mb-4">
-                <Card className="border-light shadow-sm rounded event-card">
-                  <Card.Body>
-                    <Card.Title className="d-flex align-items-center">
-                      <FaRegNewspaper className="me-2 text-primary" />
-                      {event.title}
-                    </Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted d-flex align-items-center">
-                      <FaCalendarAlt className="me-2" />
-                      {new Date(event.date).toLocaleDateString()}
-                    </Card.Subtitle>
-                    <Card.Text className="d-flex align-items-center">
-                      <FaMapMarkerAlt className="me-2 text-success" />
-                      <strong>Location:</strong> {event.location}
-                    </Card.Text>
-                    <Card.Text>
-                      <strong>Description:</strong> {event.description}
-                    </Card.Text>
-                    {event.gmeetLink && (
-                      <a
-                        href={event.gmeetLink}
-                        className="btn btn-outline-primary w-100"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FaLink className="me-2" />
-                        Join Event
-                      </a>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </>
+      {showSuccess && (
+        <Alert variant="success" className="text-center">
+          Images analyzed successfully!
+        </Alert>
       )}
 
-      {showNonTechnicalEvents && (
-        <>
-          <h2 className="text-center mb-4">Non-Technical Events</h2>
+      {mlResults.length > 0 && (
+        <div className="mt-5">
+          <h2 className="text-center mb-4">Analysis Results</h2>
           <Row>
-            {nonTechnicalEvents.map((event) => (
-              <Col md={4} key={event._id} className="mb-4">
-                <Card className="border-light shadow-sm rounded event-card">
+            {mlResults.map((result, index) => (
+              <Col md={4} key={index} className="mb-4">
+                <Card className="border-light shadow-sm rounded result-card">
+                  <Card.Img variant="top" src={result.src} className="result-image" />
                   <Card.Body>
-                    <Card.Title className="d-flex align-items-center">
-                      <FaRegNewspaper className="me-2 text-primary" />
-                      {event.title}
-                    </Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted d-flex align-items-center">
-                      <FaCalendarAlt className="me-2" />
-                      {new Date(event.date).toLocaleDateString()}
-                    </Card.Subtitle>
-                    <Card.Text className="d-flex align-items-center">
-                      <FaMapMarkerAlt className="me-2 text-success" />
-                      <strong>Location:</strong> {event.location}
+                    <Card.Title className="text-center">{result.name}</Card.Title>
+                    <Card.Text className="text-center">
+                      <strong>{result.prediction}</strong>
                     </Card.Text>
-                    <Card.Text>
-                      <strong>Description:</strong> {event.description}
+                    <Card.Text className="text-center">
+                      <strong>ML Analysis:</strong> {result.mlAnalysis}
                     </Card.Text>
-                    {event.gmeetLink && (
-                      <a
-                        href={event.gmeetLink}
-                        className="btn btn-outline-primary w-100"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FaLink className="me-2" />
-                        Join Event
-                      </a>
-                    )}
+                    <Form.Group controlId={`feedback${index}`}>
+                      <Form.Label>Your Feedback</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        value={feedbacks[index] || ''}
+                        onChange={(e) => handleFeedbackChange(index, e.target.value)}
+                        placeholder="Provide your feedback here..."
+                      />
+                    </Form.Group>
                   </Card.Body>
                 </Card>
               </Col>
             ))}
           </Row>
-        </>
+        </div>
       )}
     </Container>
   );
 }
 
-export default Event;
-
+export default MachineLearningAnalysis;
