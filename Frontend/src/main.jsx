@@ -49,12 +49,12 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "dashboard",
+        path: "/dashboard",
         element: <Dashboard />,
       },
 
       {
-        path: "events",
+        path: "/events",
         element: <Event />,
       },
       {

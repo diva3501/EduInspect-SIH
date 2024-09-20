@@ -1,195 +1,134 @@
 import React, { useState } from 'react';
-import { FaDonate, FaInfoCircle } from 'react-icons/fa';
-import { getLoggedIn } from '../services/authService';
-import { Link } from 'react-router-dom';
-import './DonationSchemes.css';
+import { Container, Row, Col, Form, Button, Card, Alert, Spinner } from 'react-bootstrap';
+import './FacultyDetailsAnalysis.css'; // Import custom CSS for additional styling
 
-const schemes = [ 
-  {
-    id: 1,
-    name: 'Library Development',
-    description: 'Funding for expanding the library with new books, e-resources, and comfortable seating arrangements.',
-    studentsInvolved: ['Amit Sharma', 'Rekha Singh'],
-    facultyInvolved: ['Mr. Rajesh Kumar', 'Mrs. Anjali Patel'],
-    fundingGoal: '₹40,000',
-    amountGathered: '₹25,000',
-    contactNumber: '+91-98765-43210',
-    spoc: {
-      name: 'Mr. Rajesh Kumar',
-      role: 'Library Head',
-      mobile: '+91-98765-43210',
-      email: 'rajesh.kumar@example.com',
-    }
-  },
-  {
-    id: 2,
-    name: 'Scholarship Fund',
-    description: 'Providing scholarships to underprivileged students for their academic achievements and needs.',
-    studentsInvolved: ['Neha Agarwal', 'Ravi Kumar'],
-    facultyInvolved: ['Mr. Vijay Singh', 'Mrs. Priya Gupta'],
-    fundingGoal: '₹50,000',
-    amountGathered: '₹30,000',
-    contactNumber: '+91-87654-32109',
-    spoc: {
-      name: 'Mrs. Priya Gupta',
-      role: 'Scholarship Coordinator',
-      mobile: '+91-87654-32109',
-      email: 'priya.gupta@example.com',
-    }
-  },
-  {
-    id: 3,
-    name: 'Tech Lab Enhancement',
-    description: 'Upgrading technology labs with the latest computers and software to enhance learning experiences.',
-    studentsInvolved: ['Rohit Sharma', 'Aarti Mehta'],
-    facultyInvolved: ['Mr. Sunil Rao', 'Mrs. Seema Sharma'],
-    fundingGoal: '₹45,000',
-    amountGathered: '₹28,000',
-    contactNumber: '+91-98765-12345',
-    spoc: {
-      name: 'Mr. Sunil Rao',
-      role: 'Tech Lab Supervisor',
-      mobile: '+91-98765-12345',
-      email: 'sunil.rao@example.com',
-    }
-  },
-  {
-    id: 4,
-    name: 'Sports Complex Improvement',
-    description: 'Renovating and expanding the sports complex to include new facilities and equipment.',
-    studentsInvolved: ['Pooja Singh', 'Karan Mehta'],
-    facultyInvolved: ['Mr. Rajiv Kumar', 'Mrs. Nisha Joshi'],
-    fundingGoal: '₹30,000',
-    amountGathered: '₹18,000',
-    contactNumber: '+91-87654-98765',
-    spoc: {
-      name: 'Mrs. Nisha Joshi',
-      role: 'Sports Complex Manager',
-      mobile: '+91-87654-98765',
-      email: 'nisha.joshi@example.com',
-    }
-  },
-  {
-    id: 5,
-    name: 'Community Outreach Program',
-    description: 'Organizing community outreach programs to support local initiatives and development.',
-    studentsInvolved: ['Suman Rani', 'Deepak Patel'],
-    facultyInvolved: ['Mr. Anil Kumar', 'Mrs. Ritu Singh'],
-    fundingGoal: '₹25,000',
-    amountGathered: '₹12,000',
-    contactNumber: '+91-98765-67890',
-    spoc: {
-      name: 'Mr. Anil Kumar',
-      role: 'Community Outreach Head',
-      mobile: '+91-98765-67890',
-      email: 'anil.kumar@example.com',
-    }
-  },
-  {
-    id: 6,
-    name: 'Green Campus Initiative',
-    description: 'Implementing sustainability projects to make the campus eco-friendly and green.',
-    studentsInvolved: ['Amit Patel', 'Kavita Desai'],
-    facultyInvolved: ['Mr. Pradeep Saini', 'Mrs. Manju Mehta'],
-    fundingGoal: '₹35,000',
-    amountGathered: '₹20,000',
-    contactNumber: '+91-87654-43210',
-    spoc: {
-      name: 'Mrs. Manju Mehta',
-      role: 'Sustainability Coordinator',
-      mobile: '+91-87654-43210',
-      email: 'manju.mehta@example.com',
-    }
-  },
-  {
-    id: 7,
-    name: 'Cultural Fest Support',
-    description: 'Supporting the annual cultural fest with funds for organizing events and activities.',
-    studentsInvolved: ['Raj Kumar', 'Nisha Patel'],
-    facultyInvolved: ['Mr. Sanjay Verma', 'Mrs. Neelam Sharma'],
-    fundingGoal: '₹50,000',
-    amountGathered: '₹22,000',
-    contactNumber: '+91-98765-54321',
-    spoc: {
-      name: 'Mrs. Neelam Sharma',
-      role: 'Cultural Fest Coordinator',
-      mobile: '+91-98765-54321',
-      email: 'neelam.sharma@example.com',
-    }
-  }
+const staffNames = [
+  "Alice Johnson", "Bob Smith", "Charlie Brown", "Diana Prince", "Edward Nygma",
+  "Fiona Gallagher", "George Martin", "Hannah Baker", "Ian Malcolm", "Julia Roberts",
+  "Kevin Spacey", "Laura Croft", "Michael Scott", "Nancy Drew", "Oliver Twist",
+  "Peter Parker", "Quinn Fabray", "Rachel Green", "Sam Winchester", "Tina Fey",
+  "Uma Thurman", "Victor Frankenstein", "Will Smith", "Xena Warrior", "Yoda",
+  "Zoe Saldana"
 ];
 
-const DonationSchemes = () => {
-  const [selectedScheme, setSelectedScheme] = useState(null);
-  const [showSpocDetails, setShowSpocDetails] = useState(null);
-  const loggedIn = getLoggedIn();
+const getRandomAnalysis = () => {
+  const analyses = [
+    "Positive: All data is structured and well-professionalized.",
+    "Negative: Expected qualifications like PhD/Master's degree are missing.",
+    "Improvement Area: Consider providing more detailed training records."
+  ];
+  return analyses[Math.floor(Math.random() * analyses.length)];
+};
 
-  const handleDonate = (scheme) => {
-    setSelectedScheme(scheme);
-    setShowSpocDetails({
-      name: "Dr. Arun Patel",
-      role: "Project Coordinator",
-      mobile: "+91-98765-43210",
-      email: "arun.patel@college.edu"
-    });
-  };
-
+const AnalysisInfoCard = () => {
   return (
-    <div className="relative min-h-screen flex flex-col items-center p-4 mt-5">
-      {loggedIn ? (
-        <div className="w-full max-w-4xl">
-          <h2 className="text-2xl font-bold mb-4 text-center">Donation Schemes</h2>
-          {schemes.map((scheme) => (
-            <div key={scheme.id} className="bg-white shadow-md rounded-md p-6 mb-4">
-              <h3 className="text-xl font-semibold mb-2">{scheme.name}</h3>
-              <p className="mb-2">{scheme.description}</p>
-              <p className="mb-2"><strong>Students Involved:</strong> {scheme.studentsInvolved.join(', ')}</p>
-              <p className="mb-2"><strong>Faculty Involved:</strong> {scheme.facultyInvolved.join(', ')}</p>
-              <p className="mb-2"><strong>Funding Goal:</strong> {scheme.fundingGoal}</p>
-              <p className="mb-2"><strong>Amount Gathered:</strong> {scheme.amountGathered}</p>
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-600"
-                onClick={() => handleDonate(scheme)}
-              >
-                Donate
-                <FaDonate className="inline-block ml-2" />
-              </button>
-            </div>
-          ))}
-
-          {showSpocDetails && (
-            <div className="fixed inset-0 flex items-center justify-center bg-gray-700 bg-opacity-75 z-50">
-              <div className="bg-white p-6 rounded-md shadow-lg w-11/12 sm:w-1/2">
-                <h3 className="text-xl font-semibold mb-2">SPOC Details</h3>
-                <p className="mb-2"><strong>Name:</strong> {showSpocDetails.name}</p>
-                <p className="mb-2"><strong>Role:</strong> {showSpocDetails.role}</p>
-                <p className="mb-2"><strong>Mobile:</strong> {showSpocDetails.mobile}</p>
-                <p className="mb-2"><strong>Email:</strong> {showSpocDetails.email}</p>
-                <button
-                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-600"
-                  onClick={() => setShowSpocDetails(null)}
-                >
-                  Close
-                  <FaInfoCircle className="inline-block ml-2" />
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">You're Not Logged In</h1>
-          <p className="text-gray-600 mb-4">Please log in to access donation schemes.</p>
-          <Link
-            to="/login"
-            className="bg-black text-white px-4 py-2 rounded-md text-sm font-medium"
-          >
-            Login
-          </Link>
-        </div>
-      )}
-    </div>
+    <Card className="mb-4 p-3 shadow">
+      <Card.Title className="text-center">NLP Analysis Overview</Card.Title>
+      <Card.Body>
+        <p>
+          The NLP analysis assesses faculty data based on various parameters to ensure compliance with AICTE standards.
+        </p>
+        <h5>Requirements for Positive Analysis:</h5>
+        <ul>
+          <li>Structured data in the provided PDF format.</li>
+          <li>All faculty members must have relevant qualifications listed.</li>
+          <li>Comprehensive records of training and professional development.</li>
+        </ul>
+        <h5>Negative Findings:</h5>
+        <ul>
+          <li>Missing expected qualifications such as PhD or Master's degree.</li>
+          <li>Inconsistent data formatting.</li>
+          <li>Lack of detailed training records.</li>
+        </ul>
+        <h5>Recommendations:</h5>
+        <ul>
+          <li>Standardize the data format for easier processing.</li>
+          <li>Ensure all faculty qualifications are accurately listed.</li>
+          <li>Include more detailed training information for each faculty member.</li>
+        </ul>
+      </Card.Body>
+    </Card>
   );
 };
 
-export default DonationSchemes;
+function FacultyDetailsAnalysis() {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [analysisResults, setAnalysisResults] = useState([]);
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setAnalysisResults([]);
+
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+
+    const results = staffNames.map((name) => ({
+      name,
+      prediction: getRandomAnalysis(),
+    }));
+
+    setAnalysisResults(results);
+    setLoading(false);
+    setSelectedFile(null);
+  };
+
+  return (
+    <Container className="py-5">
+      <h1 className="text-center mb-4">Faculty Details Analysis</h1>
+      <AnalysisInfoCard />
+      <p className="text-center mb-4">
+        Provide all faculty details in a single PDF as per the format required by AICTE. 
+        Ensure the document contains all necessary information.
+      </p>
+
+      <Form onSubmit={handleSubmit} className="mb-5 p-4 bg-light shadow-lg rounded">
+        <Form.Group controlId="formFile">
+          <Form.Label>Choose PDF File</Form.Label>
+          <Form.Control
+            type="file"
+            accept="application/pdf"
+            onChange={handleFileChange}
+            required
+          />
+        </Form.Group>
+        <Button type="submit" variant="primary" className="mt-3 w-100">
+          Analyze Faculty Details
+        </Button>
+      </Form>
+
+      {loading && (
+        <Alert variant="info" className="text-center">
+          <Spinner animation="border" role="status" />
+          <span className="ms-2">Processing your PDF, please wait...</span>
+        </Alert>
+      )}
+
+      {analysisResults.length > 0 && (
+        <div className="mt-5">
+          <h2 className="text-center mb-4">NLP Analysis Results</h2>
+          <Row>
+            {analysisResults.map((result, index) => (
+              <Col md={4} key={index} className="mb-4">
+                <Card className="border-light shadow-sm rounded result-card">
+                  <Card.Body>
+                    <Card.Title className="text-center">{result.name}</Card.Title>
+                    <Card.Text className="text-center">
+                      <strong>{result.prediction}</strong>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      )}
+    </Container>
+  );
+}
+
+export default FacultyDetailsAnalysis;

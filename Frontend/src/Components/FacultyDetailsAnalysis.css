@@ -1,0 +1,39 @@
+body {
+    background-color: #f8f9fa;
+  }
+  
+  h1 {
+    color: #343a40;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .text-center {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+  }
+  
+  .result-card {
+    transition: transform 0.3s;
+  }
+  
+  .result-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  .bg-light {
+    background-color: #ffffff;
+  }
+  
+  .shadow-lg {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
